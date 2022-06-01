@@ -19,6 +19,8 @@ class Board:
         # we should contruct the list of lists here
         # We have a 2-D board, list of lists is most natural
 
+        # generate a new board
+        board = = [[None for _ in range(self.dim_size)] for _ in range(seld.dim_size)]
 
 #Play game
 def play(dim_size=10, num_bombs=10):
