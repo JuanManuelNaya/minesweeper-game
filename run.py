@@ -18,10 +18,6 @@ class Board:
         self.dug = set()  # if we dig at 0, 0, then self.dug = {(0,0)}
 
     def make_new_board(self):
-        # Construct a new board based on the dim size and num bombs
-        # we should contruct the list of lists here
-        # We have a 2-D board, list of lists is most natural
-    def assign_values_to_board(self):
         # generate a new board
         board = [[None for _ in range(self.dim_size)] for _ in range(self.dim_size)]
         # this creates an array like this:
@@ -44,6 +40,43 @@ class Board:
             board[row][col] = '*' # plant the bomb
             bombs_planted += 1 
         return board
+
+    def assign_values_to_board(self):
+        #now that we have the bombs planted, let's assign a numer 0-8 for all empy spaces which
+        #represents how many neighboring bombs there are. we can precompute these and it'll save us some
+        # effort checkking what's around the board later on
+        for r in range(self.dim_size):
+            for c in range(self.dim_size):
+                if self.boar[r][c] == '*':
+                    #if this is already a bomb, we don't want to calculate anything
+                    continue
+                self.board[r][c] = self.get_num_neighboring_bombs(r, c)
+
+    def get_num_neighboring_bombs(self, row, col):
+        # let's iterate through each of the neighboring positions and sum numer of bombs
+        # top left: (row-1, col-1)
+        # top middle: (row-1, col)
+        # top right: (row-1, col+1) 
+        # left: (row, col-1)
+        # right: (row, col+1)
+        # bottom left: (row+1, col-1)
+        # bottom middle: (row+1, col)
+        # bottom right: (row+1, col+1)
+
+        # make sure to not go out of bounds!
+
+        num_neighboring_bombs = 0
+        for r in range(row-1, (row+1)+1):  #checking below above
+            for c in range(col-1, (col+1)+1): #checking left and right
+                if r == row and c == col:
+                    # our original location, don't check
+                    continue
+                if self.board[r][c] == '*':
+                    num_neighboring_bombs += 1
+                    
+        return num_neighboring_bombs
+
+
 
 #Play game
 def play(dim_size=10, num_bombs=10):
