@@ -4,7 +4,20 @@
 class Board:
     def __init__(self, dim_size, num_bombs):
         self.dim_size = dim_size
-        self.num_bombs num_bombs
+        self.num_bombs = num_bombs
+
+        # Create board
+        # helper function
+        self.board = self.make_new_board() # plant the bombs
+
+        # initialize a se to keep track of wich locations we've uncovered
+        # we'll save (row,col) tuples into this set
+        self.dug = set() # if we dig at 0, 0, then self.dug = {(0,0)}
+
+    def make_new_board(self):
+        # Construct a new board based on the dim size and num bombs
+        # we should contruct the list of lists here
+        # We have a 2-D board, list of lists is most natural
 
 
 #Play game
