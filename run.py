@@ -34,6 +34,7 @@ class Board:
         bombs_planted = 0
         while bombs_planted < self.num_bombs:
             loc = random.randint(0, self.dim_size**2-1) # return a random integer N such that a <= N <= b
+            row = loc // self.dim_size
 
 #Play game
 def play(dim_size=10, num_bombs=10):
