@@ -10,19 +10,20 @@ class Board:
 
         # Create board
         # helper function
-        self.board = self.make_new_board() # plant the bombs
+        self.board = self.make_new_board()  # plant the bombs
+        self.assign_values_to_board()
 
         # initialize a se to keep track of wich locations we've uncovered
         # we'll save (row,col) tuples into this set
-        self.dug = set() # if we dig at 0, 0, then self.dug = {(0,0)}
+        self.dug = set()  # if we dig at 0, 0, then self.dug = {(0,0)}
 
     def make_new_board(self):
         # Construct a new board based on the dim size and num bombs
         # we should contruct the list of lists here
         # We have a 2-D board, list of lists is most natural
-
+    def assign_values_to_board(self):
         # generate a new board
-        board = [[None for _ in range(self.dim_size)] for _ in range(seld.dim_size)]
+        board = [[None for _ in range(self.dim_size)] for _ in range(self.dim_size)]
         # this creates an array like this:
         # [[None,None, ..., None],
         # [None,None, ..., None],
@@ -33,15 +34,16 @@ class Board:
         # plant the bombs
         bombs_planted = 0
         while bombs_planted < self.num_bombs:
-            loc = random.randint(0, self.dim_size**2-1) # return a random integer N such that a <= N <= b
-            row = loc // self.dim_size #we want the number of times dim_size goes into loc to tell us
-            col = loc % self.dim_size #we want the remainder to tell us what index in that row to 
+            loc = random.randint(0, self.dim_size**2 - 1) # return a random integer N such that a <= N <= b
+            row = loc // self.dim_size  # we want the number of times dim_size goes into loc to tell us
+            col = loc % self.dim_size  # we want the remainder to tell us what index in that row to 
 
             if board[row][col] == '*':
                 #We have already planted a bomb in that specific index so keep going
                 continue
             board[row][col] = '*' # plant the bomb
             bombs_planted += 1 
+        return board
 
 #Play game
 def play(dim_size=10, num_bombs=10):
