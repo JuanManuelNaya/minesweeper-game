@@ -66,21 +66,47 @@ class Board:
         # make sure to not go out of bounds!
 
         num_neighboring_bombs = 0
-        for r in range(row-1, (row+1)+1):  #checking below above
-            for c in range(col-1, (col+1)+1): #checking left and right
+        for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):  #checking below above
+            for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1): #checking left and right
                 if r == row and c == col:
                     # our original location, don't check
                     continue
                 if self.board[r][c] == '*':
                     num_neighboring_bombs += 1
-                    
+
         return num_neighboring_bombs
 
+    def dig(self, row, col):
+        # dig at tthe location!
+        # return True if successful dig, False if bomb dug
+
+        # scenarios:
+        # hit a bomb -> game over
+        # dig at location with neighboring bombs -> finish dig
+        # dog at ;pcatopm wotj mp neighboring bombs -> recursively dig neighbors!
+
+        self.dug.add((row, col)) #keep track that we dug here
+
+        if self.board[row][col] == '*': # game ends
+            return False
+        elif self.board[row][col] > 0: # we dug at a location with neighbouring bombs, we can continue playing so reurn True
+            return True
+
+        # self.board[row][col] == 0
+        for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):  #checking below above
+            for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
+                if (r, c) in self.dug:
+                    continue # don't dig where you have already dug
+                self.dig(r, c)
+
+        return True
 
 
 #Play game
 def play(dim_size=10, num_bombs=10):
     # Step 1: create the board and plant the bombs
+    board = Board(dim_size, num_bombs)
+
     # Step 2: show the user the board and ask where they want to dig
     # Step 3a: if location is a bom, show game over message
     # Step 3b: if location is not a bomb, dig recursively until each square is at least next to a bomb
