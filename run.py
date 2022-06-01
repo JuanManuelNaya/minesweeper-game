@@ -1,3 +1,5 @@
+import random
+
 # Create a Board object to represent the minesweeper game
 # This is so we can say "create a new board object", or
 # "dig here", or "render this game for this object"
@@ -21,6 +23,17 @@ class Board:
 
         # generate a new board
         board = = [[None for _ in range(self.dim_size)] for _ in range(seld.dim_size)]
+        # this creates an array like this:
+        # [[None,None, ..., None],
+        # [None,None, ..., None],
+        # [...,                ],
+        # [None,None, ..., None]]
+        # we can see how this represents a board
+
+        # plant the bombs
+        bombs_planted = 0
+        while bombs_planted < self.num_bombs:
+            loc = random.randint(0, self.dim_size**2-1) # return a random integer N such that a <= N <= b
 
 #Play game
 def play(dim_size=10, num_bombs=10):
