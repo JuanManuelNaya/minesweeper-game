@@ -22,7 +22,7 @@ class Board:
         # We have a 2-D board, list of lists is most natural
 
         # generate a new board
-        board = = [[None for _ in range(self.dim_size)] for _ in range(seld.dim_size)]
+        board = [[None for _ in range(self.dim_size)] for _ in range(seld.dim_size)]
         # this creates an array like this:
         # [[None,None, ..., None],
         # [None,None, ..., None],
@@ -34,7 +34,14 @@ class Board:
         bombs_planted = 0
         while bombs_planted < self.num_bombs:
             loc = random.randint(0, self.dim_size**2-1) # return a random integer N such that a <= N <= b
-            row = loc // self.dim_size
+            row = loc // self.dim_size #we want the number of times dim_size goes into loc to tell us
+            col = loc % self.dim_size #we want the remainder to tell us what index in that row to 
+
+            if board[row][col] == '*':
+                #We have already planted a bomb in that specific index so keep going
+                continue
+            board[row][col] = '*' # plant the bomb
+            bombs_planted += 1 
 
 #Play game
 def play(dim_size=10, num_bombs=10):
