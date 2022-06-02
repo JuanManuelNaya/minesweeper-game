@@ -1,4 +1,5 @@
 import random
+import re
 
 # Create a Board object to represent the minesweeper game
 # This is so we can say "create a new board object", or
@@ -116,6 +117,8 @@ class Board:
                 else:
                     visible_board[row][col] = ' '
 
+        # put this together in a string
+
 
 
 #Play game
@@ -127,4 +130,8 @@ def play(dim_size=10, num_bombs=10):
     # Step 3a: if location is a bom, show game over message
     # Step 3b: if location is not a bomb, dig recursively until each square is at least next to a bomb
     # Step 4: repet steps 2 and 3a/b until there are no more plances to dig -> VICTORY!
-    pass
+    
+    while len(board.dug) < board.dim_size ** 2 - num_bombs:  #all places dug < to dimension board size - number bombs
+        print(board)
+        # 0,0 or 0, 0 or 0,    0
+        user_input = re.split(',(\\s)*', input("Where would you like to dig? Input as row,col: ")) # '0,3' we are going to imput a string and it will be splited by coma space space string or a num ',(\\s)* 
