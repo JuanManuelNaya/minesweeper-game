@@ -132,7 +132,7 @@ def play(dim_size=10, num_bombs=10):
     # Step 4: repet steps 2 and 3a/b until there are no more plances to dig -> VICTORY!
     safe = True
     
-    while len(board.dug) < board.dim_size ** 2 - num_bombs:  #all places dug < to dimension board size - number bombs
+    while len(board.dug) < board.dim_size ** 2 - num_bombs:  # all places dug < to dimension board size - number bombs
         print(board)
         # 0,0 or 0, 0 or 0,    0
         user_input = re.split(',(\\s)*', input("Where would you like to dig? Input as row,col: ")) # '0,3' we are going to imput a string and it will be splited by coma space space string or a num ',(\\s)* 
@@ -157,3 +157,6 @@ def play(dim_size=10, num_bombs=10):
         #Reveal the whole board
         board.dug = [(r,c) for r in range(board.dim_size) for c in range(board.dim_size)]
         print(board)
+
+if __name__ == '__main__':  # will execute only by python3 run.py
+    play()
