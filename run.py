@@ -130,12 +130,30 @@ def play(dim_size=10, num_bombs=10):
     # Step 3a: if location is a bom, show game over message
     # Step 3b: if location is not a bomb, dig recursively until each square is at least next to a bomb
     # Step 4: repet steps 2 and 3a/b until there are no more plances to dig -> VICTORY!
+    safe = True
     
     while len(board.dug) < board.dim_size ** 2 - num_bombs:  #all places dug < to dimension board size - number bombs
         print(board)
         # 0,0 or 0, 0 or 0,    0
         user_input = re.split(',(\\s)*', input("Where would you like to dig? Input as row,col: ")) # '0,3' we are going to imput a string and it will be splited by coma space space string or a num ',(\\s)* 
         row, col = int(user_input[0]), int(user_input[-1])
+
+        #if dig position is invalid, continue
         if row < 0 or row >= board.dim_size or col < 0 or col >= dim_size:
             print("Invalid location. Try again.")
             continue
+
+        #if it's valid,we dig
+        safe = board.dig(row, col)
+        if not safe:
+            # dug a bomb
+            break # Game Over
+
+    # 2 ways to end loop, 1 dug all positions with no bomb -> win , 2 you dog a bomb game over
+    if safe: 
+        print("Congratulations! You Won the game!")
+    else:
+        print("Sorry Game Over")
+        #Reveal the whole board
+        board.dug = [(r,c) for r in range(board.dim_size) for c in range(board.dim_size)]
+        print(board)
