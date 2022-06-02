@@ -93,13 +93,29 @@ class Board:
             return True
 
         # self.board[row][col] == 0
-        for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):  #checking below above
-            for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
+        for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):    # checking below above
+            for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):  #checking left and right
                 if (r, c) in self.dug:
-                    continue # don't dig where you have already dug
+                    continue  # don't dig where you have already dug
                 self.dig(r, c)
 
+        # if our initial dig didn't hit a bomb, we shouldn't hit a bomb here
         return True
+
+    def __str__(self):
+        # this is a magic function where if you call print on this object,
+        # it'll print out what this function returns! 
+        # return a string that shows the board to the player
+
+        #Create a new array that represents what the user would see
+        visible_board = [[None for _ in range (self.dim_size)] for _ in range(self.dim_size)]
+        for row in range(self.dim_size):
+            for col in range(self.dim_size):
+                if (row,col) in self.dug:
+                    visible_board[row][col] = str(self.board[row][col])
+                else:
+                    visible_board[row][col] = ' '
+
 
 
 #Play game
