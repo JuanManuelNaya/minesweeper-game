@@ -12,14 +12,14 @@ class Board:
 
         # let's create the board
         # helper function!
-        self.board = self.make_new_board() # plant the bombs
-        self.assign_values_to_board()
+        self.board = self.create_new_board() # plant the bombs
+        self.allocate_values_to_board()
 
         # initialize a set to keep track of which locations we've uncovered
         # we'll save (row,col) tuples into this set 
         self.dug = set() # if we dig at 0, 0, then self.dug = {(0,0)}
 
-    def make_new_board(self):
+    def create_new_board(self):
         # construct a new board based on the dim size and num bombs
         # we should construct the list of lists here (or whatever representation you prefer,
         # but since we have a 2-D board, list of lists is most natural)
@@ -34,8 +34,8 @@ class Board:
         # we can see how this represents a board!
 
         # plant the bombs
-        bombs_planted = 0
-        while bombs_planted < self.num_bombs:
+        mines_planted = 0
+        while mines_planted < self.num_bombs:
             loc = random.randint(0, self.dim_size**2 - 1) # return a random integer N such that a <= N <= b
             row = loc // self.dim_size  # we want the number of times dim_size goes into loc to tell us what row to look at
             col = loc % self.dim_size  # we want the remainder to tell us what index in that row to look at
@@ -45,11 +45,11 @@ class Board:
                 continue
 
             board[row][col] = '*' # plant the bomb
-            bombs_planted += 1
+            mines_planted += 1
 
         return board
 
-    def assign_values_to_board(self):
+    def allocate_values_to_board(self):
         # now that we have the bombs planted, let's assign a number 0-8 for all the empty spaces, which
         # represents how many neighboring bombs there are. we can precompute these and it'll save us some
         # effort checking what's around the board later on :)
@@ -58,9 +58,9 @@ class Board:
                 if self.board[r][c] == '*':
                     # if this is already a bomb, we don't want to calculate anything
                     continue
-                self.board[r][c] = self.get_num_neighboring_bombs(r, c)
+                self.board[r][c] = self.obtain_num_neighboring_bombs(r, c)
 
-    def get_num_neighboring_bombs(self, row, col):
+    def obtain_num_neighboring_bombs(self, row, col):
         # let's iterate through each of the neighboring positions and sum number of bombs
         # top left: (row-1, col-1)
         # top middle: (row-1, col)
@@ -171,7 +171,7 @@ def play(dim_size=10, num_bombs=10):
     # Step 3b: if location is not a bomb, dig recursively until each square is at least
     #          next to a bomb
     # Step 4: repeat steps 2 and 3a/b until there are no more places to dig -> VICTORY!
-    safe = True 
+    secure = True 
 
     while len(board.dug) < board.dim_size ** 2 - num_bombs:
         print(board)
@@ -183,13 +183,13 @@ def play(dim_size=10, num_bombs=10):
             continue
 
         # if it's valid, we dig
-        safe = board.dig(row, col)
-        if not safe:
+        secure = board.dig(row, col)
+        if not secure:
             # dug a bomb ahhhhhhh
             break # (game over rip)
 
     # 2 ways to end loop, lets check which one
-    if safe:
+    if secure:
         print("CONGRATULATIONS!!!! YOU ARE VICTORIOUS!")
     else:
         print("SORRY GAME OVER :(")
