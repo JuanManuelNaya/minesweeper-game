@@ -18,10 +18,9 @@ class Board:
         self.dug = set() # if we dig at 0, 0, then self.dug = {(0,0)}
 
     def create_new_board(self):
-        # construct a new board based on the dim size and num bombs
-        # we should construct the list of lists here (or whatever representation you prefer,
-        # but since we have a 2-D board, list of lists is most natural)
-
+        """
+        Make new board based on dim size and num bombs ( doing lists of lists)
+        """
         # generate a new board
         board = [[None for _ in range(self.dim_size)] for _ in range(self.dim_size)]
         # this creates an array like this:
@@ -31,7 +30,7 @@ class Board:
         #  [None, None, ..., None]]
         # we can see how this represents a board!
 
-        # plant the bombs
+     
         mines_planted = 0
         while mines_planted < self.num_bombs:
             loc = random.randint(0, self.dim_size**2 - 1) # return a random integer N such that a <= N <= b
@@ -48,9 +47,10 @@ class Board:
         return board
 
     def allocate_values_to_board(self):
-        # now that we have the bombs planted, let's assign a number 0-8 for all the empty spaces, which
-        # represents how many neighboring bombs there are. we can precompute these and it'll save us some
-        # effort checking what's around the board later on :)
+        """
+        Assign numbers 0-8 for all empty spaces.
+        It also represents how many neighborig bombs there are.
+        """
         for r in range(self.dim_size):
             for c in range(self.dim_size):
                 if self.board[r][c] == '*':
@@ -59,18 +59,20 @@ class Board:
                 self.board[r][c] = self.obtain_num_neighboring_bombs(r, c)
 
     def obtain_num_neighboring_bombs(self, row, col):
-        # let's iterate through each of the neighboring positions and sum number of bombs
-        # top left: (row-1, col-1)
-        # top middle: (row-1, col)
-        # top right: (row-1, col+1)
-        # left: (row, col-1)
-        # right: (row, col+1)
-        # bottom left: (row+1, col-1)
-        # bottom middle: (row+1, col)
-        # bottom right: (row+1, col+1)
+        """
+        Iterate through each neighboring positions and add number of mines.
+        Have to make sure not go out of bounds.
+        Positions to check as follows:
+        top left: (row-1, col-1)
+        top middle: (row-1, col)
+        top right: (row-1, col+1)
+        left: (row, col-1)
+        right: (row, col+1)
+        bottom left: (row+1, col-1)
+        bottom middle: (row+1, col)
+        bottom right: (row+1, col+1)
 
-        # make sure to not go out of bounds!
-
+        """
         num_neighboring_bombs = 0
         for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):
             for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
@@ -83,14 +85,16 @@ class Board:
         return num_neighboring_bombs
 
     def dig(self, row, col):
-        # dig at that location!
-        # return True if successful dig, False if bomb dug
+        """
+        Dig at selected location.
+        Return True if successful dig.
+        Return False in case of mine dug.
+        Different situations:
+        hit a mine -> game over
+        # dig at location with neighboring mine -> finish dig
+        # dig at location with no neighboring mine -> recursively dig neighbors!
 
-        # a few scenarios:
-        # hit a bomb -> game over
-        # dig at location with neighboring bombs -> finish dig
-        # dig at location with no neighboring bombs -> recursively dig neighbors!
-
+        """
         self.dug.add((row, col)) # keep track that we dug here
 
         if self.board[row][col] == '*':
@@ -105,14 +109,14 @@ class Board:
                     continue # don't dig where you've already dug
                 self.dig(r, c)
 
-        # if our initial dig didn't hit a bomb, we *shouldn't* hit a bomb here
+        # if our initial dig didn't hit a mine, we *shouldn't* hit a mine here
         return True
 
     def __str__(self):
-        # this is a magic function where if you call print on this object,
-        # it'll print out what this function returns!
-        # return a string that shows the board to the player
-
+        """
+        It will return a string that shows the board to the player.
+        """
+      
         # first let's create a new array that represents what the user would see
         visible_board = [[None for _ in range(self.dim_size)] for _ in range(self.dim_size)]
         for row in range(self.dim_size):
@@ -161,16 +165,17 @@ class Board:
 
 # play the game
 def play(dim_size=10, num_bombs=10):
-    # Step 1: create the board and plant the bombs
+    """
+    Game mechanics:
+    1- Create the board and plant the mines.
+    2- Show the user the board and ask for position to dig.
+    3a- If location is a mine, show Game Over message.
+    3b- If location is not a bomb, dig recursively until each square is at least next to a bomb
+    4- Repeats steps 2 and 3a/b until there are no more plances to dig -> This is a Victory
+
+    """
     board = Board(dim_size, num_bombs)
-
-    # Step 2: show the user the board and ask for where they want to dig
-    # Step 3a: if location is a bomb, show game over message
-    # Step 3b: if location is not a bomb, dig recursively until each square is at least
-    #          next to a bomb
-    # Step 4: repeat steps 2 and 3a/b until there are no more places to dig -> VICTORY!
     secure = True 
-
     while len(board.dug) < board.dim_size ** 2 - num_bombs:
         print(board)
         # 0,0 or 0, 0 or 0,    0
@@ -188,9 +193,9 @@ def play(dim_size=10, num_bombs=10):
 
     # 2 ways to end loop, lets check which one
     if secure:
-        print("CONGRATULATIONS!!!! YOU ARE VICTORIOUS!")
+        print("No more plances to dig -> You Won the Game!")
     else:
-        print("SORRY GAME OVER :(")
+        print("You dug a mine! -> GAME OVER")
         # let's reveal the whole board!
         board.dug = [(r,c) for r in range(board.dim_size) for c in range(board.dim_size)]
         print(board)
