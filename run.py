@@ -13,13 +13,13 @@ class Board:
         """
         self.dim_size = dim_size
         self.num_mines = num_mines
-        self.board = self.create_new_board() # plant the bombs
+        self.board = self.create_new_board() # plant the mines
         self.allocate_values_to_board()
         self.dug = set() # if we dig at 0, 0, then self.dug = {(0,0)}
 
     def create_new_board(self):
         """
-        Make new board based on dim size and num bombs ( doing lists of lists)
+        Make new board based on dim size and num mines ( doing lists of lists)
         """
         # generate a new board
         board = [[None for _ in range(self.dim_size)] for _ in range(self.dim_size)]
@@ -38,10 +38,10 @@ class Board:
             col = loc % self.dim_size  # we want the remainder to tell us what index in that row to look at
 
             if board[row][col] == '*':
-                # this means we've actually planted a bomb there already so keep going
+                # this means we've actually planted a mine in that position already, so keep going
                 continue
 
-            board[row][col] = '*' # plant the bomb
+            board[row][col] = '*' # plant the mine
             mines_planted += 1
 
         return board
@@ -49,16 +49,16 @@ class Board:
     def allocate_values_to_board(self):
         """
         Assign numbers 0-8 for all empty spaces.
-        It also represents how many neighborig bombs there are.
+        It also represents how many neighborig mines there are.
         """
         for r in range(self.dim_size):
             for c in range(self.dim_size):
                 if self.board[r][c] == '*':
                     # if this is already a bomb, we don't want to calculate anything
                     continue
-                self.board[r][c] = self.obtain_num_neighboring_bombs(r, c)
+                self.board[r][c] = self.obtain_num_neighboring_mines(r, c)
 
-    def obtain_num_neighboring_bombs(self, row, col):
+    def obtain_num_neighboring_mines(self, row, col):
         """
         Iterate through each neighboring positions and add number of mines.
         Have to make sure not go out of bounds.
@@ -170,7 +170,7 @@ def play(dim_size=10, num_mines=10):
     1- Create the board and plant the mines.
     2- Show the user the board and ask for position to dig.
     3a- If location is a mine, show Game Over message.
-    3b- If location is not a bomb, dig recursively until each square is at least next to a bomb
+    3b- If location is not a mine, dig recursively until each square is at least next to a mine
     4- Repeats steps 2 and 3a/b until there are no more plances to dig -> This is a Victory
 
     """
@@ -188,8 +188,8 @@ def play(dim_size=10, num_mines=10):
         # if it's valid, we dig
         secure = board.dig(row, col)
         if not secure:
-            # dug a bomb ahhhhhhh
-            break # (game over rip)
+            # mine dug
+            break # (game over)
 
     # 2 ways to end loop, lets check which one
     if secure:
