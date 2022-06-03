@@ -5,14 +5,14 @@ import re
 # this is so that we can just say "create a new board object", or
 # "dig here", or "render this game for this object"
 class Board:
-    def __init__(self, dim_size, num_bombs):
+    def __init__(self, dim_size, num_mines):
         """
         Create the board. Helper function to plant mines.
         Initializ set to keep track locations. 
         Save (row,col) tuples in set
         """
         self.dim_size = dim_size
-        self.num_bombs = num_bombs
+        self.num_mines = num_mines
         self.board = self.create_new_board() # plant the bombs
         self.allocate_values_to_board()
         self.dug = set() # if we dig at 0, 0, then self.dug = {(0,0)}
@@ -32,7 +32,7 @@ class Board:
 
      
         mines_planted = 0
-        while mines_planted < self.num_bombs:
+        while mines_planted < self.num_mines:
             loc = random.randint(0, self.dim_size**2 - 1) # return a random integer N such that a <= N <= b
             row = loc // self.dim_size  # we want the number of times dim_size goes into loc to tell us what row to look at
             col = loc % self.dim_size  # we want the remainder to tell us what index in that row to look at
@@ -164,7 +164,7 @@ class Board:
         return string_rep
 
 # play the game
-def play(dim_size=10, num_bombs=10):
+def play(dim_size=10, num_mines=10):
     """
     Game mechanics:
     1- Create the board and plant the mines.
@@ -174,9 +174,9 @@ def play(dim_size=10, num_bombs=10):
     4- Repeats steps 2 and 3a/b until there are no more plances to dig -> This is a Victory
 
     """
-    board = Board(dim_size, num_bombs)
+    board = Board(dim_size, num_mines)
     secure = True 
-    while len(board.dug) < board.dim_size ** 2 - num_bombs:
+    while len(board.dug) < board.dim_size ** 2 - num_mines:
         print(board)
         # 0,0 or 0, 0 or 0,    0
         user_input = re.split(',(\\s)*', input("Where would you like to dig? Input as row,col: "))  # '0, 3'
