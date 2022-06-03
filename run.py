@@ -6,17 +6,15 @@ import re
 # "dig here", or "render this game for this object"
 class Board:
     def __init__(self, dim_size, num_bombs):
-        # let's keep track of these parameters. they'll be helpful later
+        """
+        Create the board. Helper function to plant mines.
+        Initializ set to keep track locations. 
+        Save (row,col) tuples in set
+        """
         self.dim_size = dim_size
         self.num_bombs = num_bombs
-
-        # let's create the board
-        # helper function!
         self.board = self.create_new_board() # plant the bombs
         self.allocate_values_to_board()
-
-        # initialize a set to keep track of which locations we've uncovered
-        # we'll save (row,col) tuples into this set 
         self.dug = set() # if we dig at 0, 0, then self.dug = {(0,0)}
 
     def create_new_board(self):
