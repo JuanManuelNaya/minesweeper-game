@@ -73,16 +73,16 @@ class Board:
         bottom right: (row+1, col+1)
 
         """
-        num_neighboring_bombs = 0
+        num_neighboring_mines = 0
         for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):
             for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
                 if r == row and c == col:
                     # our original location, don't check
                     continue
                 if self.board[r][c] == '*':
-                    num_neighboring_bombs += 1
+                    num_neighboring_mines += 1
 
-        return num_neighboring_bombs
+        return num_neighboring_mines
 
     def dig(self, row, col):
         """
