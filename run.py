@@ -21,7 +21,6 @@ class Board:
         # generate a new board
         board = [
             [None for _ in range(self.dim_size)] for _ in range(self.dim_size)]
-     
         mines_planted = 0
         while mines_planted < self.num_mines:
             loc = random.randint(0, self.dim_size**2 - 1)  
@@ -176,7 +175,7 @@ def play(dim_size=10, num_mines=10):
         print(board)
         # 0,0 or 0, 0 or 0,    0
         user_input = re.split(
-            ',(\\s)*', input("Time to dig. Input as row,col: "))  
+            ',(\\s)*', input("Time to dig. Input as row,col:\n"))  
         row, col = int(user_input[0]), int(user_input[-1])
         if row < 0 or row >= board.dim_size or col < 0 or col >= dim_size:
             print("Invalid location. Try again.")
