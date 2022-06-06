@@ -198,6 +198,7 @@ def play(dim_size=10, num_mines=10):
             in range(board.dim_size)
             ]
         print(board)
+        
 # good practice
 if __name__ == '__main__': 
     play()
