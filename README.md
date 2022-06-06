@@ -22,8 +22,24 @@ The Minesweeper game is based on the classic video game creted by Curt Johnson f
 
 * The player will input a number for a row followed by a coma and a number for a column. Example 1,6.
 
-* Squares contain numbers (from 1 to 8), with each number being the number of mines adjacent to the uncovered square.
+* Squares contain numbers (from 0 to 2), with each number being the number of mines adjacent to the uncovered square.
 
 * If a mine is found is Game Over, if not continue digging.
 
 * Player will win when there are no more places to dig and no mine its found.
+
+## Existing Features
+
+* Random board generation
+- Mines are randomly placed on the board
+
+![initial](/images/boardInitial.JPG)
+
+- Accepts user input
+- Maintain information in dug positions.
+- Shows squares containing numbers from 0 to 2, with each number being the number of mines adjacent to the uncovered square.
+
+![input](/images/result.JPG)
+
+
+
