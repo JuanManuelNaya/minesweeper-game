@@ -1,31 +1,29 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Minesweeper Game
 
-Welcome Juan Naya,
+The Minesweeper game is a Python terminal game, wich runs in the Code institue mock terminal on Heroku.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+User wins by diggin in different possitions on the board evoiding mines.
 
-## Reminders
+Heroku link project. [Heroku](https://minesweeper-game2022.herokuapp.com/)
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+GitHub link project. [GitHub](https://github.com/JuanManuelNaya/minesweeper-game)
 
-## Creating the Heroku app
+![Responsive](/images/Deployment.JPG)
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## How to Play
 
-1. `heroku/python`
-2. `heroku/nodejs`
+The Minesweeper game is based on the classic video game creted by Curt Johnson for IBM's OS/2. You can read more on [wikipedia](https://en.wikipedia.org/wiki/Microsoft_Minesweeper)
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+* A board is randomly generated.
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+* The player can see a board with positions 0 to 9 for rows and columns.
 
-Connect your GitHub repository and deploy as normal.
+* Mines are marked as *
 
-## Constraints
+* The player will input a number for a row followed by a coma and a number for a column. Example 1,6.
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+* Squares contain numbers (from 1 to 8), with each number being the number of mines adjacent to the uncovered square.
 
------
-Happy coding!
+* If a mine is found is Game Over, if not continue digging.
+
+* Player will win when there are no more places to dig and no mine its found.
