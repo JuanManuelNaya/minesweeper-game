@@ -44,7 +44,7 @@ class Board:
         for r in range(self.dim_size):
             for c in range(self.dim_size):
                 # if this is already a mine, nothing happens, continue
-                if self.board[r][c] == '*': 
+                if self.board[r][c] == '*':
                     continue
                 self.board[r][c] = self.obtain_num_neighboring_mines(r, c)
 
@@ -88,7 +88,7 @@ class Board:
 
         """
         # keep track that we dug here
-        self.dug.add((row, col))  
+        self.dug.add((row, col))
 
         if self.board[row][col] == '*':
             return False
@@ -119,7 +119,7 @@ class Board:
                     visible_board[row][col] = str(self.board[row][col])
                 else:
                     visible_board[row][col] = ' '
-        
+
         # Putting this together in a string
         str_pre = ''
         # Getting max column widths for printing
@@ -141,7 +141,7 @@ class Board:
             cells.append(format % (col))
         indices_row += '  '.join(cells)
         indices_row += '  \n'
-        
+
         for i in range(len(visible_board)):
             row = visible_board[i]
             str_pre += f'{i} |'
@@ -165,9 +165,9 @@ def play(dim_size=10, num_mines=10):
     1- Create the board and plant the mines.
     2- Show the user the board and ask for position to dig.
     3a- If location is a mine, show Game Over message.
-    3b- If location is not a mine, 
+    3b- If location is not a mine,
     dig recursively until each square is at least next to a mine
-    4- Repeats steps 2 and 3a/b until there are no more plances to dig 
+    4- Repeats steps 2 and 3a/b until there are no more plances to dig
     -> This is a Victory
 
     """
@@ -188,7 +188,7 @@ def play(dim_size=10, num_mines=10):
         if not secure:
             # mine dug
             # (game over)
-            break 
+            break
     # 2 ways to end loop, lets check which one
     if secure:
         print("No more plances to dig -> You Won the Game!")
