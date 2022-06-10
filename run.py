@@ -1,18 +1,19 @@
 import random
 import re
 
+
 class Board:
     def __init__(self, dim_size, num_mines):
         """
         Create the board. Helper function to plant mines.
-        Initializ set to keep track locations. 
+        Initializ set to keep track locations.
         Save (row,col) tuples in set
         """
         self.dim_size = dim_size
         self.num_mines = num_mines
-        self.board = self.create_new_board() 
+        self.board = self.create_new_board()
         self.allocate_values_to_board()
-        self.dug = set() 
+        self.dug = set()
 
     def create_new_board(self):
         """
@@ -23,14 +24,14 @@ class Board:
             [None for _ in range(self.dim_size)] for _ in range(self.dim_size)]
         mines_planted = 0
         while mines_planted < self.num_mines:
-            loc = random.randint(0, self.dim_size**2 - 1)  
-            row = loc // self.dim_size  
-            col = loc % self.dim_size 
+            loc = random.randint(0, self.dim_size**2 - 1)
+            row = loc // self.dim_size
+            col = loc % self.dim_size
 
             if board[row][col] == '*':
                 continue
             # Plant the mine
-            board[row][col] = '*' 
+            board[row][col] = '*'
             mines_planted += 1
 
         return board
@@ -43,7 +44,7 @@ class Board:
         for r in range(self.dim_size):
             for c in range(self.dim_size):
                 # if this is already a mine, nothing happens, continue
-                if self.board[r][c] == '*':  
+                if self.board[r][c] == '*': 
                     continue
                 self.board[r][c] = self.obtain_num_neighboring_mines(r, c)
 
@@ -66,7 +67,7 @@ class Board:
         for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):
             for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
                 # our original location, don't check, continue
-                if r == row and c == col:  
+                if r == row and c == col:
                     continue
                 if self.board[r][c] == '*':
                     num_neighboring_mines += 1
@@ -99,7 +100,7 @@ class Board:
             for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
                 if (r, c) in self.dug:
                     # don't dig where you've already dug
-                    continue   
+                    continue
                 self.dig(r, c)
 
         # if our initial dig didn't hit a mine, we *shouldn't* hit a mine here
@@ -156,6 +157,7 @@ class Board:
 
         return str_pre
 
+
 # play the game
 def play(dim_size=10, num_mines=10):
     """
@@ -170,12 +172,12 @@ def play(dim_size=10, num_mines=10):
 
     """
     board = Board(dim_size, num_mines)
-    secure = True 
+    secure = True
     while len(board.dug) < board.dim_size ** 2 - num_mines:
         print(board)
         # 0,0 or 0, 0 or 0,    0
         user_input = re.split(
-            ',(\\s)*', input("Time to dig. Input as row,col:\n"))  
+            ',(\\s)*', input("Time to dig. Input as row,col:\n"))
         row, col = int(user_input[0]), int(user_input[-1])
         if row < 0 or row >= board.dim_size or col < 0 or col >= dim_size:
             print("Invalid location. Try again.")
@@ -194,11 +196,12 @@ def play(dim_size=10, num_mines=10):
         print("You dug a mine! -> GAME OVER")
         # Reveal the whole board!
         board.dug = [
-            (r, c) for r in range(board.dim_size) for c 
+            (r, c) for r in range(board.dim_size) for c
             in range(board.dim_size)
             ]
         print(board)
-        
+
+
 # good practice
-if __name__ == '__main__': 
+if __name__ == '__main__':
     play()
