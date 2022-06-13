@@ -84,8 +84,6 @@ When the user inputs an empty value the game will end.
 When the user inputs a negative number the game will end.
 When the user inputs more than 2 values for row and col the game it will end.
 
-![bugerror](/images/InvalidinputCat.JPG)
-
 * Solved Bug
 
 Fixed error regarding not adding the number of neighonroing mines, check the code and i go t`board[r][c] == '*':num_neighboring_mines += 1` fixed by adding `self.` like this `self.board[r][c] == '*':num_neighboring_mines += 1`
@@ -95,6 +93,8 @@ Fixed error regarding not adding the number of neighonroing mines, check the cod
 * PEP8
 
 - No major error found in PEP8online.com
+
+![image](/images/PEP8NoError.JPG)
 
 ## Deployment
 
@@ -110,6 +110,6 @@ Steps for deployment:
 
 - Code Institute for the deployment terminal
 - Wikipedia for the details of the Minesweeper game.
-- Minesweeper Game inspered on [video](https://www.youtube.com/watch?v=8ext9G7xspg&t=14s)
+- Minesweeper Game inspered on [video](https://www.youtube.com/watch?v=Fjw7Lc9zlyU)
 
 
