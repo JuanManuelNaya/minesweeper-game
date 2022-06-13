@@ -182,7 +182,6 @@ def play(dim_size=10, num_mines=10):
         if row < 0 or row >= board.dim_size or col < 0 or col >= dim_size:
             print("Invalid location. Try again.")
             continue
-
         # if it's valid, we dig
         secure = board.dig(row, col)
         if not secure:

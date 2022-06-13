@@ -56,6 +56,7 @@ The Minesweeper game is based on the classic video game creted by Curt Johnson f
 - Allow player to mark positions as not safe.
 - Allow player select the number of mines position on the board.
 
+
 ## Data Model
 
 I decided to use a Board class as my model. The game create an instance of a Board class.
@@ -79,6 +80,9 @@ I have manually tested this project by doing the following:
 * Unsolved Bug
 
 When the user inputs a string the game it will end.
+When the user inputs an empty value the game will end.
+When the user inputs a negative number the game will end.
+When the user inputs more than 2 values for row and col the game it will end.
 
 ![bugerror](/images/InvalidinputCat.JPG)
 
