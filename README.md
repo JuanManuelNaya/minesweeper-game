@@ -106,5 +106,6 @@ Steps for deployment:
 
 - Code Institute for the deployment terminal
 - Wikipedia for the details of the Minesweeper game.
+- Minesweeper Game inspered on [video](https://www.youtube.com/watch?v=8ext9G7xspg&t=14s)
 
 
